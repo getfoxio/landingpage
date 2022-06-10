@@ -1,0 +1,31 @@
+version: "3"
+   
+services:
+
+  pyserver:
+    container_name: pageserver
+    build:
+      context: ./pyserver
+      args:
+        DJANGO_ALLOWED_HOSTS: '*'
+        DJANGO_SECRET_KEY: '*'
+    command: bash -c "printenv > /etc/default/locale && python manage.py migrate && gunicorn --certfile=${CERT_FILE} --keyfile=${KEY_FILE} --reload getfox.wsgi --bind 0.0.0.0:${APP_PORT}"
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    volumes:
+      - "./pyserver:/pyserver"
+    networks:
+      page_network:
+         ipv4_address: 193.170.0.10
+
+    environment:
+      - MODE=${MODE}
+      - APP_URL=${APP_URL}
+      - SECRET_KEY=${SECRET_KEY}
+networks:
+  page_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 193.170.0.0/24

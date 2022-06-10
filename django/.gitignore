@@ -1,0 +1,12 @@
+local.env
+debug.log
+/temp
+/pyserver/media
+/pyserver/admin/__pycache__
+/pyserver/users/__pycache__
+/pyserver/users/migrations/__pycache__
+/pyserver/getfox/__pycache__
+/pyserver/links/__pycache__
+/pyserver/links/migrations/__pycache__
+/pyserver/common/__pycache__
+*.pyc
