@@ -1,4 +1,4 @@
-# django 
+# html/js
 
 # getfox landing page front
 
