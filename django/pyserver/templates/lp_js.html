@@ -1,0 +1,16 @@
+<html>
+<head>
+  <title>Landing Page - {{ username }}</title>
+  <link rel="stylesheet" type="text/css" href="https://localhost:9080/static/css/lp.css">
+  <script src="https://localhost:9080/static/js/api.js"></script>
+</head>
+<body>
+  <script>
+    getfox.init({
+      "key": "{{ apikey }}",
+      "username":"{{ username }}",
+      "apiUrl": "https://localhost:9080/api",
+    })
+  </script>
+</body>
+</html>

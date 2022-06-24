@@ -134,4 +134,4 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-
+API_URL = os.environ.get('API_URL')
