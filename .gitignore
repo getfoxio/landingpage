@@ -1,0 +1,7 @@
+.local.env
+*.log
+./django/pyserver/pages/__pycache__
+./django/pyserver/getfox/__pycache__
+package-lock.json
+node_modules
+*.pyc
