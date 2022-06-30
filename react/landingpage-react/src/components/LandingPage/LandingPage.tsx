@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { getfox } from './Getfox'
+import React, { useState, useEffect } from 'react'
+import { getfox } from '../../lib/landingpage'
 
 export interface LandingPageProps {
   username: any
@@ -8,15 +8,14 @@ export interface LandingPageProps {
 }
 
 const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
-  const [user, setUser] = useState<any>({})
+  const [user, setUser] = useState<any>()
 
   useEffect(() => {
-    getfox
+    getfox.landingpage
       .init({
         key: apiKey,
         username: username,
         apiUrl: apiEndpoint,
-        build: false,
       })
       .then((user: any) => {
         setUser(user)
@@ -24,11 +23,11 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
   }, [])
 
   return (
-    <div>
+    <div className="landing-page__root">
       {user ? (
-        <div>
+        <div className="user__root">
           {user.landingPage.fontFamily ? (
-            <style>font-family:${user.landingPage.fontFamily};</style>
+            <style> font-family:${user.landingPage.fontFamily};</style>
           ) : null}
           <div className="profile-landingpage">
             <div
@@ -116,7 +115,7 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                   {user.socialMedia.facebookId &&
                   user.socialMedia.facebookUrl ? (
                     <a
-                      href={`https://instagram.com/${user.socialMedia.facebookUrl}`}
+                      href={`${user.socialMedia.facebookUrl}`}
                       target="_blank"
                       rel="noreferrer"
                       className="fc profile-link--href profile-link--href-icon profile-link--href-ig"
@@ -134,7 +133,7 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                   ) : null}
                   {user.socialMedia.twitterId && user.socialMedia.twitterUrl ? (
                     <a
-                      href={`https://instagram.com/${user.socialMedia.twitterUrl}`}
+                      href={`${user.socialMedia.twitterUrl}`}
                       target="_blank"
                       rel="noreferrer"
                       className="fc profile-link--href profile-link--href-icon profile-link--href-ig"
@@ -199,7 +198,10 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                           onClick={
                             link.isClickable
                               ? () => {
-                                  getfox.openLink(link.path, link.linkType)
+                                  getfox.landingpage.openLink(
+                                    link.path,
+                                    link.linkType
+                                  )
                                 }
                               : undefined
                           }
@@ -237,11 +239,56 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                   )}
                 </ul>
               </div>
+              <div className="f1 frt copyright copyright-footer">
+                <div className="df frt footer-links">
+                  <a
+                    className="footer-link"
+                    href={`${user.appUrl}/static/support`}
+                    target="_blank"
+                  >
+                    {user.translations.support}
+                  </a>
+                  <a
+                    className="footer-link"
+                    href={`${user.appUrl}/static/privacy`}
+                    target="_blank"
+                  >
+                    {user.translations.privacyPolicy}
+                  </a>
+                </div>
+                <div className="frt footer-links">
+                  <div className="fcol">
+                    <p className="df">
+                      &copy;.{' '}
+                      <a
+                        href="https://getfox.io"
+                        className="footer-link-getfox"
+                        target=""
+                      >
+                        Getfox
+                      </a>
+                      . {user.translations.rights}.<br />
+                    </p>
+                    <p className="frt">
+                      {user.translations.madeWith}❤️{user.translations.forAll}{' '}
+                      <a
+                        className="footer-link-fox"
+                        href="https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/red-fox.aspx"
+                        target="_blank"
+                      >
+                        {' '}
+                        {user.translations.foxes}
+                      </a>
+                      .
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       ) : (
-        <p>Loading..</p>
+        null
       )}
     </div>
   )

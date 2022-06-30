@@ -1,1 +1,1 @@
-declare const getfox: any;
+export declare const getfox: any;

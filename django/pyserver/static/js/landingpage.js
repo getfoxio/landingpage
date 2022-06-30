@@ -1,5 +1,5 @@
-"use strict";const getfox={__params__:{key:"",username:"",apiEndpoint:"https://api.getfox.io/api",build:!1},init:a=>new Promise((e,t)=>{getfox.__params__.key=a.key,getfox.__params__.username="",a.username&&(getfox.__params__.username=a.username),getfox.__params__.apiEndpoint="https://api.getfox.io/api",a.apiUrl&&(getfox.__params__.apiEndpoint=a.apiUrl);let i=!0;a.build&&(i=a.build),getfox.getUser().then(o=>{o&&(i&&getfox.build(o),e(o))}).catch(o=>{t(o)})}),openLink:(a,e)=>{window.open(a,e!==3?"_blank":"_self")},getUser:(a=getfox.__params__.username,e=getfox.__params__.key)=>{const t=`{
-    user(username: "${a}",apikey:"${e}") {
+"use strict";(()=>{var e={landingpage:{__params__:{key:"",username:"",apiEndpoint:"https://api.getfox.io/api",build:!1},init:a=>new Promise((o,l)=>{e.landingpage.__params__.key=a.key,e.landingpage.__params__.username="",a.username&&(e.landingpage.__params__.username=a.username),e.landingpage.__params__.apiEndpoint="https://api.getfox.io/api",a.apiUrl&&(e.landingpage.__params__.apiEndpoint=a.apiUrl);let i=!1;a.build&&(i=a.build),e.landingpage.getUser().then(n=>{n&&(i&&(e.landingpage.build(n),console.log("getfox.landingpage.build()")),o(n))}).catch(n=>{l(n)})}),openLink:(a,o)=>{window.open(a,o!==3?"_blank":"_self")},getUser:(a=e.landingpage.__params__.username,o=e.landingpage.__params__.key)=>{let l=`{
+    user(username: "${a}",apikey:"${o}") {
       id
       username
       email
@@ -65,8 +65,8 @@
         noLinksFound
       }
     }
-  }`;return getfox.fetchApi(t).then(i=>{if(i.errors)return console.log("GetfoxAPI: ",i.errors[0].message),null;if(!i.errors)return i.data.user}).catch(i=>{console.log("GetfoxAPI: Unable to connect to API service.",i)})},userlinks:(a=getfox.__params__.username,e=getfox.__params__.key)=>{const t=`{
-    userlinks(username:"${a}",apikey:"${e}"){     
+  }`;return e.landingpage.fetchApi(l).then(i=>{if(i.errors)return console.log("GetfoxAPI: ",i.errors[0].message),null;if(!i.errors)return i.data.user}).catch(i=>{console.log("GetfoxAPI: Unable to connect to API service.",i)})},userlinks:(a=e.landingpage.__params__.username,o=e.landingpage.__params__.key)=>{let l=`{
+    userlinks(username:"${a}",apikey:"${o}"){     
       id
       name
       linkUrl
@@ -90,7 +90,7 @@
         productImage4
       }
     }
-  }`;return getfox.fetchApi(t).then(i=>{if(i.errors)throw new Error(i.errors[0].message);return i.data.userlinks})},fetchApi:a=>{const e={method:"post",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:a})};return fetch(getfox.__params__.apiEndpoint,e).then(t=>t.json())},build:a=>{const e=document.body,t=`
+  }`;return e.fetchApi(l).then(i=>{if(i.errors)throw new Error(i.errors[0].message);return i.data.userlinks})},fetchApi:a=>{let o={method:"post",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:a})};return fetch(e.landingpage.__params__.apiEndpoint,o).then(l=>l.json())},build:a=>{let o=document.body,l=`
     ${a.landingPage.fontFamily?`
     <style>
       .profile-landingpage * {
@@ -168,11 +168,11 @@
       </div>
       <div class="fcol landing_page__content page-content--dashboard">
       <ul class="landing_page__links-list sortable-list">
-      ${a.links.length?`${a.links.map(i=>{let o="";i.background&&(o=i.background),i.thumbnail&&(o=i.thumbnail),!!i.product&&!!i.product.productImage1&&(o=i.product.productImage1),!!i.product&&!!i.product.productImage2&&(o=i.product.productImage2),!!i.product&&!!i.product.productImage3&&(o=i.product.productImage3),!!i.product&&!!i.product.productImage4&&(o=i.product.productImage4);let l="";return o&&(l=`<div class="link-resource-thumb" style="background-image:url(${a.appUrl}/${o});"></div>`),`<li 
+      ${a.links.length?`${a.links.map(i=>{let n="";i.background&&(n=i.background),i.thumbnail&&(n=i.thumbnail),!!i.product&&!!i.product.productImage1&&(n=i.product.productImage1),!!i.product&&!!i.product.productImage2&&(n=i.product.productImage2),!!i.product&&!!i.product.productImage3&&(n=i.product.productImage3),!!i.product&&!!i.product.productImage4&&(n=i.product.productImage4);let t="";return n&&(t=`<div class="link-resource-thumb" style="background-image:url(${a.appUrl}/${n});"></div>`),`<li 
                 class="df flc frow landing_page__link-row ${i.isClickable?"landing_page__link-row--clickable":""} link-resource sortable-list__item with-thumb"
-                ${i.isClickable?`onclick="javascript:getfox.openLink('${i.path}', ${i.linkType})"`:""}
+                ${i.isClickable?`onclick="javascript:getfox_lp.openLink('${i.path}', ${i.linkType})"`:""}
                 >
-                ${l}
+                ${t}
                 <a class="f1 fcol">
                   <div class="f1 fc">${i.name}</div>
                   ${i.product?`
@@ -209,5 +209,4 @@
         </div>
       </div>
     </div>
-  `;e.insertAdjacentHTML("beforeend",t)}};
-//# sourceMappingURL=landingpage.js.map
+  `;o.insertAdjacentHTML("beforeend",l)}}};window.getfox=e;window.getfox_lp=e.landingpage;})();

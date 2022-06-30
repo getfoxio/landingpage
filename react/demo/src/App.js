@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import LandingPage from './components/LandingPage'
+import React from 'react'
+import { LandingPage } from '@getfoxio/landingpage-react'
 
 export default function App() {
-	const [username, setUsername] = useState('kubix')
-	const [apikey, setApikey] = useState('gfk_271ce8d301c3e1c506be80e94ec45a82')
-
   return (
     <div className="App">
-      <LandingPage username={username} apikey={apikey} />
+      <LandingPage
+        username=""
+        apiKey=""
+        apiEndpoint="https://api.getfox.io/graphql"
+      />
     </div>
   )
 }

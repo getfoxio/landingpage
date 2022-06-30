@@ -1,5 +1,5 @@
-"use strict";var t=Object.defineProperty;var c=Object.getOwnPropertyDescriptor;var d=Object.getOwnPropertyNames;var g=Object.prototype.hasOwnProperty;var s=(a,e)=>{for(var l in e)t(a,l,{get:e[l],enumerable:!0})},p=(a,e,l,i)=>{if(e&&typeof e=="object"||typeof e=="function")for(let n of d(e))!g.call(a,n)&&n!==l&&t(a,n,{get:()=>e[n],enumerable:!(i=c(e,n))||i.enumerable});return a};var f=a=>p(t({},"__esModule",{value:!0}),a);var m={};s(m,{getfox:()=>o});module.exports=f(m);var o={landingpage:{__params__:{key:"",username:"",apiEndpoint:"https://api.getfox.io/api",build:!1},init:a=>new Promise((e,l)=>{o.landingpage.__params__.key=a.key,o.landingpage.__params__.username="",a.username&&(o.landingpage.__params__.username=a.username),o.landingpage.__params__.apiEndpoint="https://api.getfox.io/api",a.apiUrl&&(o.landingpage.__params__.apiEndpoint=a.apiUrl);let i=!1;a.build&&(i=a.build),o.landingpage.getUser().then(n=>{n&&(i&&(o.landingpage.build(n),console.log("getfox.landingpage.build()")),e(n))}).catch(n=>{l(n)})}),openLink:(a,e)=>{window.open(a,e!==3?"_blank":"_self")},getUser:(a=o.landingpage.__params__.username,e=o.landingpage.__params__.key)=>{let l=`{
-    user(username: "${a}",apikey:"${e}") {
+"use strict";(()=>{var e={landingpage:{__params__:{key:"",username:"",apiEndpoint:"https://api.getfox.io/api",build:!1},init:a=>new Promise((o,l)=>{e.landingpage.__params__.key=a.key,e.landingpage.__params__.username="",a.username&&(e.landingpage.__params__.username=a.username),e.landingpage.__params__.apiEndpoint="https://api.getfox.io/api",a.apiUrl&&(e.landingpage.__params__.apiEndpoint=a.apiUrl);let i=!0;a.build&&(i=a.build),e.landingpage.getUser().then(n=>{n&&(i&&e.landingpage.build(n),o(n))}).catch(n=>{l(n)})}),openLink:(a,o)=>{window.open(a,o!==3?"_blank":"_self")},getUser:(a=e.landingpage.__params__.username,o=e.landingpage.__params__.key)=>{let l=`{
+    user(username: "${a}",apikey:"${o}") {
       id
       username
       email
@@ -65,8 +65,8 @@
         noLinksFound
       }
     }
-  }`;return o.landingpage.fetchApi(l).then(i=>{if(i.errors)return console.log("GetfoxAPI: ",i.errors[0].message),null;if(!i.errors)return i.data.user}).catch(i=>{console.log("GetfoxAPI: Unable to connect to API service.",i)})},userlinks:(a=o.landingpage.__params__.username,e=o.landingpage.__params__.key)=>{let l=`{
-    userlinks(username:"${a}",apikey:"${e}"){     
+  }`;return e.landingpage.fetchApi(l).then(i=>{if(i.errors)return console.log("GetfoxAPI: ",i.errors[0].message),null;if(!i.errors)return i.data.user}).catch(i=>{console.log("GetfoxAPI: Unable to connect to API service.",i)})},userlinks:(a=e.landingpage.__params__.username,o=e.landingpage.__params__.key)=>{let l=`{
+    userlinks(username:"${a}",apikey:"${o}"){     
       id
       name
       linkUrl
@@ -90,7 +90,7 @@
         productImage4
       }
     }
-  }`;return o.fetchApi(l).then(i=>{if(i.errors)throw new Error(i.errors[0].message);return i.data.userlinks})},fetchApi:a=>{let e={method:"post",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:a})};return fetch(o.landingpage.__params__.apiEndpoint,e).then(l=>l.json())},build:a=>{let e=document.body,l=`
+  }`;return e.fetchApi(l).then(i=>{if(i.errors)throw new Error(i.errors[0].message);return i.data.userlinks})},fetchApi:a=>{let o={method:"post",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:a})};return fetch(e.landingpage.__params__.apiEndpoint,o).then(l=>l.json())},build:a=>{let o=document.body,l=`
     ${a.landingPage.fontFamily?`
     <style>
       .profile-landingpage * {
@@ -168,11 +168,11 @@
       </div>
       <div class="fcol landing_page__content page-content--dashboard">
       <ul class="landing_page__links-list sortable-list">
-      ${a.links.length?`${a.links.map(i=>{let n="";i.background&&(n=i.background),i.thumbnail&&(n=i.thumbnail),!!i.product&&!!i.product.productImage1&&(n=i.product.productImage1),!!i.product&&!!i.product.productImage2&&(n=i.product.productImage2),!!i.product&&!!i.product.productImage3&&(n=i.product.productImage3),!!i.product&&!!i.product.productImage4&&(n=i.product.productImage4);let r="";return n&&(r=`<div class="link-resource-thumb" style="background-image:url(${a.appUrl}/${n});"></div>`),`<li 
+      ${a.links.length?`${a.links.map(i=>{let n="";i.background&&(n=i.background),i.thumbnail&&(n=i.thumbnail),!!i.product&&!!i.product.productImage1&&(n=i.product.productImage1),!!i.product&&!!i.product.productImage2&&(n=i.product.productImage2),!!i.product&&!!i.product.productImage3&&(n=i.product.productImage3),!!i.product&&!!i.product.productImage4&&(n=i.product.productImage4);let t="";return n&&(t=`<div class="link-resource-thumb" style="background-image:url(${a.appUrl}/${n});"></div>`),`<li 
                 class="df flc frow landing_page__link-row ${i.isClickable?"landing_page__link-row--clickable":""} link-resource sortable-list__item with-thumb"
                 ${i.isClickable?`onclick="javascript:getfox_lp.openLink('${i.path}', ${i.linkType})"`:""}
                 >
-                ${r}
+                ${t}
                 <a class="f1 fcol">
                   <div class="f1 fc">${i.name}</div>
                   ${i.product?`
@@ -209,4 +209,4 @@
         </div>
       </div>
     </div>
-  `;e.insertAdjacentHTML("beforeend",l)}}};window.getfox=o;window.getfox_lp=o.landingpage;
+  `;o.insertAdjacentHTML("beforeend",l)}}};window.getfox=e;window.getfox_lp=e.landingpage;})();

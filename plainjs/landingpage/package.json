@@ -2,7 +2,7 @@
   "name": "landingpage",
   "version": "1.0.0",
   "description": "",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "ts-types": " tsc --emitDeclarationOnly --outDir dist",
     "build": "rimraf dist && node ./esbuild.mjs && npm run ts-types"

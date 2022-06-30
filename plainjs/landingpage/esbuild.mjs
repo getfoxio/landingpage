@@ -4,12 +4,12 @@ import { nodeExternalsPlugin } from 'esbuild-node-externals'
 esbuild
   .build({
     entryPoints: ['src/landingpage.ts'],
-    outdir: 'dist/umd',
-    // bundle: true,
-    sourcemap: true,
+    outdir: 'dist/iife',
+    bundle: true,
+    sourcemap: false,
     minify: true,
-    // format: 'umd',
-    target: ['esnext'],
+    format: 'iife',
+    target: ['es2015', 'chrome57', 'firefox56', 'safari11', 'edge16'],
     plugins: [nodeExternalsPlugin()],
   })
   .catch(() => {
@@ -20,7 +20,7 @@ esbuild.build({
   entryPoints: ['src/landingpage.ts'],
   outdir: 'dist/cjs',
   bundle: true,
-  sourcemap: true,
+  sourcemap: false,
   minify: true,
   format: 'cjs',
   target: 'esnext',
@@ -31,7 +31,7 @@ esbuild.build({
   entryPoints: ['src/landingpage.ts'],
   outdir: 'dist/esm',
   bundle: true,
-  sourcemap: true,
+  sourcemap: false,
   minify: true,
   splitting: true,
   format: 'esm',

@@ -1,52 +1,54 @@
-const getfox: any = {
-  __params__: {
-    key: '',
-    username: '',
-    apiEndpoint: 'https://api.getfox.io/api',
-    build: false,
-  },
+export const getfox: any = {
+  landingpage: {
+    __params__: {
+      key: '',
+      username: '',
+      apiEndpoint: 'https://api.getfox.io/api',
+      build: false,
+    },
 
-  init: (options: any) => {
-    return new Promise((resolve, reject) => {
-      getfox.__params__.key = options.key
-      getfox.__params__.username = ''
-      if (!!options.username) {
-        getfox.__params__.username = options.username
-      }
-      getfox.__params__.apiEndpoint = 'https://api.getfox.io/api'
-      if (options.apiUrl) {
-        getfox.__params__.apiEndpoint = options.apiUrl
-      }
-      let buildHtml: boolean = true
-      if (!!options.build) {
-        buildHtml = options.build
-      }
+    init: (options: any) => {
+      return new Promise((resolve, reject) => {
+        getfox.landingpage.__params__.key = options.key
+        getfox.landingpage.__params__.username = ''
+        if (!!options.username) {
+          getfox.landingpage.__params__.username = options.username
+        }
+        getfox.landingpage.__params__.apiEndpoint = 'https://api.getfox.io/api'
+        if (options.apiUrl) {
+          getfox.landingpage.__params__.apiEndpoint = options.apiUrl
+        }
+        let buildHtml: boolean = false
+        if (!!options.build) {
+          buildHtml = options.build
+        }
 
-      getfox
-        .getUser()
-        .then((user: any) => {
-          if (user) {
-            if (buildHtml) {
-              getfox.build(user)
+        getfox.landingpage
+          .getUser()
+          .then((user: any) => {
+            if (user) {
+              if (buildHtml) {
+                getfox.landingpage.build(user)
+                console.log('getfox.landingpage.build()')
+              }
+              resolve(user)
             }
-            resolve(user)
-          }
-        })
-        .catch((error: any) => {
-          reject(error)
-        })
-    })
-  },
+          })
+          .catch((error: any) => {
+            reject(error)
+          })
+      })
+    },
 
-  openLink: (link: any, linkType: number) => {
-    window.open(link, linkType !== 3 ? '_blank' : '_self')
-  },
+    openLink: (link: any, linkType: number) => {
+      window.open(link, linkType !== 3 ? '_blank' : '_self')
+    },
 
-  getUser: (
-    username = getfox.__params__.username,
-    key = getfox.__params__.key
-  ) => {
-    const query = `{
+    getUser: (
+      username = getfox.landingpage.__params__.username,
+      key = getfox.landingpage.__params__.key
+    ) => {
+      const query = `{
     user(username: "${username}",apikey:"${key}") {
       id
       username
@@ -114,27 +116,27 @@ const getfox: any = {
       }
     }
   }`
-    return getfox
-      .fetchApi(query)
-      .then((data: any) => {
-        if (!!data.errors) {
-          console.log('GetfoxAPI: ', data.errors[0].message)
-          return null
-        }
-        if (!data.errors) {
-          return data.data.user
-        }
-      })
-      .catch((reason: any) => {
-        console.log('GetfoxAPI: Unable to connect to API service.', reason)
-      })
-  },
+      return getfox.landingpage
+        .fetchApi(query)
+        .then((data: any) => {
+          if (!!data.errors) {
+            console.log('GetfoxAPI: ', data.errors[0].message)
+            return null
+          }
+          if (!data.errors) {
+            return data.data.user
+          }
+        })
+        .catch((reason: any) => {
+          console.log('GetfoxAPI: Unable to connect to API service.', reason)
+        })
+    },
 
-  userlinks: (
-    username = getfox.__params__.username,
-    key = getfox.__params__.key
-  ) => {
-    const query = `{
+    userlinks: (
+      username = getfox.landingpage.__params__.username,
+      key = getfox.landingpage.__params__.key
+    ) => {
+      const query = `{
     userlinks(username:"${username}",apikey:"${key}"){     
       id
       name
@@ -160,32 +162,32 @@ const getfox: any = {
       }
     }
   }`
-    return getfox.fetchApi(query).then((data: any) => {
-      if (data.errors) {
-        throw new Error(data.errors[0].message)
+      return getfox.fetchApi(query).then((data: any) => {
+        if (data.errors) {
+          throw new Error(data.errors[0].message)
+        }
+        return data.data.userlinks
+      })
+    },
+
+    fetchApi: (query: string) => {
+      const options = {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: query,
+        }),
       }
-      return data.data.userlinks
-    })
-  },
+      return fetch(getfox.landingpage.__params__.apiEndpoint, options).then((res) =>
+        res.json()
+      )
+    },
 
-  fetchApi: (query: string) => {
-    const options = {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: query,
-      }),
-    }
-    return fetch(getfox.__params__.apiEndpoint, options).then((res) =>
-      res.json()
-    )
-  },
-
-  build: (user: any) => {
-    const body = document.body
-    const html = `
+    build: (user: any) => {
+      const body = document.body
+      const html = `
     ${
       user.landingPage.fontFamily
         ? `
@@ -371,7 +373,7 @@ const getfox: any = {
                 } link-resource sortable-list__item with-thumb"
                 ${
                   link.isClickable
-                    ? `onclick="javascript:getfox.openLink('${link.path}', ${link.linkType})"`
+                    ? `onclick="javascript:getfox_lp.openLink('${link.path}', ${link.linkType})"`
                     : ''
                 }
                 >
@@ -427,8 +429,8 @@ const getfox: any = {
             <a class="footer-link" href="${
               user.appUrl
             }/static/privacy" target="_blank">${
-      user.translations.privacyPolicy
-    }</a>
+        user.translations.privacyPolicy
+      }</a>
           </div>
           <div class="frt footer-links">
             <div class="fcol">
@@ -436,17 +438,19 @@ const getfox: any = {
                 user.translations.rights
               }.<br/></p>
               <p class="frt">${user.translations.madeWith}❤️${
-      user.translations.forAll
-    } <a class="footer-link-fox" href="https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/red-fox.aspx" target="_blank"> ${
-      user.translations.foxes
-    }</a>.</p>
+        user.translations.forAll
+      } <a class="footer-link-fox" href="https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/red-fox.aspx" target="_blank"> ${
+        user.translations.foxes
+      }</a>.</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   `
-    body.insertAdjacentHTML('beforeend', html)
+      body.insertAdjacentHTML('beforeend', html)
+    },
   },
 }
-getfox
+window.getfox = getfox
+window.getfox_lp = getfox.landingpage
