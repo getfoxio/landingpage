@@ -4,7 +4,7 @@
     "registry": "https://npm.pkg.github.com/getfoxio"
   },
   "version": "1.0.0",
-  "description": "landingpage react",
+  "description": "Getfox Landing Page React component library",
   "scripts": {
     "ts-types": "tsc --emitDeclarationOnly --outDir dist",
     "build": "rimraf dist && node ./esbuild.mjs && npm run ts-types"
