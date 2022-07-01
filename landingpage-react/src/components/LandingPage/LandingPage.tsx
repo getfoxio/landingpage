@@ -9,6 +9,7 @@ export interface LandingPageProps {
 
 const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
   const [user, setUser] = useState<any>()
+  const [appUrl, setAppUrl] = useState<string>('https://getfox.io')
 
   useEffect(() => {
     getfox.landingpage
@@ -22,9 +23,16 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
       })
   }, [])
 
+  useEffect(() => {
+    if (user && !user.appUrl.includes('None')) {
+      console.log('update', user.appUrl)
+      setAppUrl(user.appUrl)
+    }
+  }, [user])
+
   return (
     <div className="landing-page__root">
-      {user ? (
+      {user && appUrl ? (
         <div className="user__root">
           {user.landingPage.fontFamily ? (
             <style> font-family:${user.landingPage.fontFamily};</style>
@@ -34,7 +42,7 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
               className="landing_page__background--overlay"
               style={{
                 backgroundImage: user.landingPage.background
-                  ? `url(${user.appUrl}/${user.landingPage.background})`
+                  ? `url(${appUrl}/${user.landingPage.background})`
                   : undefined,
                 backgroundPosition: user.landingPage.background
                   ? user.landingPage.backgroundPosition
@@ -69,7 +77,7 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                             <label
                               className="profile-logo-gfx"
                               style={{
-                                backgroundImage: `url('${user.appUrl}/${user.profileImage}')`,
+                                backgroundImage: `url('${appUrl}/${user.profileImage}')`,
                               }}
                             />
                           </div>
@@ -77,7 +85,7 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                       </div>
                       <div className="df flc landing_page__username">
                         <a
-                          href={`${user.appUrl}/${user.username}`}
+                          href={`${appUrl}/${user.username}`}
                           style={{
                             color: user.landingPage.textColor
                               ? user.landingPage.textColor
@@ -107,7 +115,7 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                       }}
                     >
                       <img
-                        src={`${user.appUrl}/static/images/ig-icon-black.svg`}
+                        src={`${appUrl}/static/images/ig-icon-black.svg`}
                         alt="instagram"
                       />
                     </a>
@@ -126,7 +134,7 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                       }}
                     >
                       <img
-                        src={`${user.appUrl}/static/images/fb-icon-black.svg`}
+                        src={`${appUrl}/static/images/fb-icon-black.svg`}
                         alt="facebook"
                       />
                     </a>
@@ -144,7 +152,7 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                       }}
                     >
                       <img
-                        src={`${user.appUrl}/static/images/twitter-icon-black.svg`}
+                        src={`${appUrl}/static/images/twitter-icon-black.svg`}
                         alt="twitter"
                       />
                     </a>
@@ -182,7 +190,7 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                           <div
                             className="link-resource-thumb"
                             style={{
-                              backgroundImage: `url(${user.appUrl}/${linkImageSource})`,
+                              backgroundImage: `url(${appUrl}/${linkImageSource})`,
                             }}
                           ></div>
                         )
@@ -243,14 +251,14 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                 <div className="df frt footer-links">
                   <a
                     className="footer-link"
-                    href={`${user.appUrl}/static/support`}
+                    href={`${appUrl}/static/support`}
                     target="_blank"
                   >
                     {user.translations.support}
                   </a>
                   <a
                     className="footer-link"
-                    href={`${user.appUrl}/static/privacy`}
+                    href={`${appUrl}/static/privacy`}
                     target="_blank"
                   >
                     {user.translations.privacyPolicy}
@@ -287,9 +295,7 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
             </div>
           </div>
         </div>
-      ) : (
-        null
-      )}
+      ) : null}
     </div>
   )
 }

@@ -1,5 +1,5 @@
-"use strict";var t=Object.defineProperty;var c=Object.getOwnPropertyDescriptor;var d=Object.getOwnPropertyNames;var g=Object.prototype.hasOwnProperty;var s=(a,e)=>{for(var l in e)t(a,l,{get:e[l],enumerable:!0})},p=(a,e,l,i)=>{if(e&&typeof e=="object"||typeof e=="function")for(let n of d(e))!g.call(a,n)&&n!==l&&t(a,n,{get:()=>e[n],enumerable:!(i=c(e,n))||i.enumerable});return a};var f=a=>p(t({},"__esModule",{value:!0}),a);var m={};s(m,{getfox:()=>o});module.exports=f(m);var o={landingpage:{__params__:{key:"",username:"",apiEndpoint:"https://api.getfox.io/api",build:!1},init:a=>new Promise((e,l)=>{o.landingpage.__params__.key=a.key,o.landingpage.__params__.username="",a.username&&(o.landingpage.__params__.username=a.username),o.landingpage.__params__.apiEndpoint="https://api.getfox.io/api",a.apiUrl&&(o.landingpage.__params__.apiEndpoint=a.apiUrl);let i=!1;a.build&&(i=a.build),o.landingpage.getUser().then(n=>{n&&(i&&(o.landingpage.build(n),console.log("getfox.landingpage.build()")),e(n))}).catch(n=>{l(n)})}),openLink:(a,e)=>{window.open(a,e!==3?"_blank":"_self")},getUser:(a=o.landingpage.__params__.username,e=o.landingpage.__params__.key)=>{let l=`{
-    user(username: "${a}",apikey:"${e}") {
+"use strict";var t=Object.defineProperty;var g=Object.getOwnPropertyDescriptor;var s=Object.getOwnPropertyNames;var c=Object.prototype.hasOwnProperty;var d=(a,n)=>{for(var o in n)t(a,o,{get:n[o],enumerable:!0})},p=(a,n,o,e)=>{if(n&&typeof n=="object"||typeof n=="function")for(let l of s(n))!c.call(a,l)&&l!==o&&t(a,l,{get:()=>n[l],enumerable:!(e=g(n,l))||e.enumerable});return a};var f=a=>p(t({},"__esModule",{value:!0}),a);var _={};d(_,{getfox:()=>i});module.exports=f(_);var i={landingpage:{__params__:{key:"",username:"",apiEndpoint:"https://api.getfox.io/graphql",build:!1,appUrl:"https://getfox.io"},init:a=>new Promise((n,o)=>{i.landingpage.__params__.key=a.key,i.landingpage.__params__.username="",a.username&&(i.landingpage.__params__.username=a.username),a.apiUrl&&(i.landingpage.__params__.apiEndpoint=a.apiUrl);let e=!1;a.build&&(e=a.build),i.landingpage.getUser().then(l=>{l&&(e&&i.landingpage.build(l),n(l))}).catch(l=>{o(l)})}),openLink:(a,n)=>{window.open(a,n!==3?"_blank":"_self")},getUser:(a=i.landingpage.__params__.username,n=i.landingpage.__params__.key)=>{let o=`{
+    user(username: "${a}",apikey:"${n}") {
       id
       username
       email
@@ -65,8 +65,8 @@
         noLinksFound
       }
     }
-  }`;return o.landingpage.fetchApi(l).then(i=>{if(i.errors)return console.log("GetfoxAPI: ",i.errors[0].message),null;if(!i.errors)return i.data.user}).catch(i=>{console.log("GetfoxAPI: Unable to connect to API service.",i)})},userlinks:(a=o.landingpage.__params__.username,e=o.landingpage.__params__.key)=>{let l=`{
-    userlinks(username:"${a}",apikey:"${e}"){     
+  }`;return i.landingpage.fetchApi(o).then(e=>{if(e.errors)return console.log("GetfoxAPI: ",e.errors[0].message),null;if(!e.errors)return e.data.user.appUrl.includes("None")||(i.landingpage.__params__.appUrl=e.data.user.appUrl),e.data.user}).catch(e=>{console.log("GetfoxAPI: Unable to connect to API service.",e)})},userlinks:(a=i.landingpage.__params__.username,n=i.landingpage.__params__.key)=>{let o=`{
+    userlinks(username:"${a}",apikey:"${n}"){     
       id
       name
       linkUrl
@@ -90,7 +90,7 @@
         productImage4
       }
     }
-  }`;return o.fetchApi(l).then(i=>{if(i.errors)throw new Error(i.errors[0].message);return i.data.userlinks})},fetchApi:a=>{let e={method:"post",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:a})};return fetch(o.landingpage.__params__.apiEndpoint,e).then(l=>l.json())},build:a=>{let e=document.body,l=`
+  }`;return i.fetchApi(o).then(e=>{if(e.errors)throw new Error(e.errors[0].message);return e.data.userlinks})},fetchApi:a=>{let n={method:"post",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:a})};return fetch(i.landingpage.__params__.apiEndpoint,n).then(o=>o.json())},build:a=>{let n=document.body,o=`
     ${a.landingPage.fontFamily?`
     <style>
       .profile-landingpage * {
@@ -100,7 +100,7 @@
     `:""}
     <div class="profile-landingpage">
       <div class="landing_page__background--overlay" style="
-      ${a.landingPage.background?`background-image:url(${a.appUrl}/${a.landingPage.background});`:""}
+      ${a.landingPage.background?`background-image:url(${i.landingpage.__params__.appUrl}/${a.landingPage.background});`:""}
       ${a.landingPage.backgroundPosition?`background-position:${a.landingPage.backgroundPosition};`:""}
       ${a.landingPage.backgroundColor?`background-color:${a.landingPage.backgroundColor};`:""}
       "
@@ -115,13 +115,13 @@
               <div class="fc profile-logo">
                 <label
                   class="profile-logo-gfx"
-                  style="background-image: url('${a.appUrl}/${a.profileImage}');"
+                  style="background-image: url('${i.landingpage.__params__.appUrl}/${a.profileImage}');"
                 >
               </div>
             </form>
           </div>
           <div class="df flc landing_page__username">
-          <a href="${a.appUrl}/${a.username}" style="${a.landingPage.textColor?`color:${a.landingPage.textColor};`:""}">
+          <a href="${i.landingpage.__params__.appUrl}/${a.username}" style="${a.landingPage.textColor?`color:${a.landingPage.textColor};`:""}">
               ${a.landingPage.title?a.landingPage.title:a.username}
               </a>
           </div>
@@ -135,7 +135,7 @@
           class="fc profile-link--href profile-link--href-icon profile-link--href-ig"
           style="${a.landingPage.textColor?`color: ${a.landingPage.textColor};`:""}"
         >
-          <img src="${a.appUrl}/static/images/ig-icon-black.svg" alt="instagram" />
+          <img src="${i.landingpage.__params__.appUrl}/static/images/ig-icon-black.svg" alt="instagram" />
         </a>
         `:""}
         ${a.socialMedia.facebookId&&a.socialMedia.facebookUrl?`
@@ -145,7 +145,7 @@
           class="fc profile-link--href profile-link--href-icon profile-link--href-ig"
           style="${a.landingPage.textColor?`color: ${a.landingPage.textColor};`:""}"
         >
-          <img src="${a.appUrl}/static/images/fb-icon-black.svg" alt="facebook" />
+          <img src="${i.landingpage.__params__.appUrl}/static/images/fb-icon-black.svg" alt="facebook" />
         </a>
         `:""}
         ${a.socialMedia.twitterId&&a.socialMedia.twitterUrl?`
@@ -155,7 +155,7 @@
           class="fc profile-link--href profile-link--href-icon profile-link--href-ig"
           style="${a.landingPage.textColor?`color: ${a.landingPage.textColor};`:""}"
         >
-          <img src="${a.appUrl}/static/images/twitter-icon-black.svg" alt="twitter" />
+          <img src="${i.landingpage.__params__.appUrl}/static/images/twitter-icon-black.svg" alt="twitter" />
         </a>
         `:""}
         </div>
@@ -168,22 +168,22 @@
       </div>
       <div class="fcol landing_page__content page-content--dashboard">
       <ul class="landing_page__links-list sortable-list">
-      ${a.links.length?`${a.links.map(i=>{let n="";i.background&&(n=i.background),i.thumbnail&&(n=i.thumbnail),!!i.product&&!!i.product.productImage1&&(n=i.product.productImage1),!!i.product&&!!i.product.productImage2&&(n=i.product.productImage2),!!i.product&&!!i.product.productImage3&&(n=i.product.productImage3),!!i.product&&!!i.product.productImage4&&(n=i.product.productImage4);let r="";return n&&(r=`<div class="link-resource-thumb" style="background-image:url(${a.appUrl}/${n});"></div>`),`<li 
-                class="df flc frow landing_page__link-row ${i.isClickable?"landing_page__link-row--clickable":""} link-resource sortable-list__item with-thumb"
-                ${i.isClickable?`onclick="javascript:getfox_lp.openLink('${i.path}', ${i.linkType})"`:""}
+      ${a.links.length?`${a.links.map(e=>{let l="";e.background&&(l=e.background),e.thumbnail&&(l=e.thumbnail),!!e.product&&!!e.product.productImage1&&(l=e.product.productImage1),!!e.product&&!!e.product.productImage2&&(l=e.product.productImage2),!!e.product&&!!e.product.productImage3&&(l=e.product.productImage3),!!e.product&&!!e.product.productImage4&&(l=e.product.productImage4);let r="";return l&&(r=`<div class="link-resource-thumb" style="background-image:url(${i.landingpage.__params__.appUrl}/${l});"></div>`),`<li 
+                class="df flc frow landing_page__link-row ${e.isClickable?"landing_page__link-row--clickable":""} link-resource sortable-list__item with-thumb"
+                ${e.isClickable?`onclick="javascript:getfox_lp.openLink('${e.path}', ${e.linkType})"`:""}
                 >
                 ${r}
                 <a class="f1 fcol">
-                  <div class="f1 fc">${i.name}</div>
-                  ${i.product?`
+                  <div class="f1 fc">${e.name}</div>
+                  ${e.product?`
                   <div class="f1 fc">   
                     <div class="flc landingpage__shoplinkproduct-attributes">
                       <span class="product-label">
-                        ${i.product.priceLabel==="onlynow"?a.translations.onlyNow:""}
-                        ${i.product.priceLabel==="sale"?a.translations.sale:""}
-                        ${i.product.priceLabel==="special"?a.translations.special:""}
+                        ${e.product.priceLabel==="onlynow"?a.translations.onlyNow:""}
+                        ${e.product.priceLabel==="sale"?a.translations.sale:""}
+                        ${e.product.priceLabel==="special"?a.translations.special:""}
                       </span>
-                      <span class="product-price">${i.product.price} ${i.product.currency}</span> 
+                      <span class="product-price">${e.product.price} ${e.product.currency}</span> 
                       <span class="product-buy-now">${a.translations.buyNow}</span>
                     </div>
                   </div>
@@ -197,8 +197,8 @@
         </div>
         <div class="f1 frt copyright copyright-footer">
           <div class="df frt footer-links">
-            <a class="footer-link" href="${a.appUrl}/static/support" target="_blank">${a.translations.support}</a>
-            <a class="footer-link" href="${a.appUrl}/static/privacy" target="_blank">${a.translations.privacyPolicy}</a>
+            <a class="footer-link" href="${i.landingpage.__params__.appUrl}/static/support" target="_blank">${a.translations.support}</a>
+            <a class="footer-link" href="${i.landingpage.__params__.appUrl}/static/privacy" target="_blank">${a.translations.privacyPolicy}</a>
           </div>
           <div class="frt footer-links">
             <div class="fcol">
@@ -209,4 +209,4 @@
         </div>
       </div>
     </div>
-  `;e.insertAdjacentHTML("beforeend",l)}}};window.getfox=o;window.getfox_lp=o.landingpage;
+  `;n.insertAdjacentHTML("beforeend",o)}}};window.getfox=i;window.getfox_lp=i.landingpage;

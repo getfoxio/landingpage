@@ -1,8 +1,8 @@
 <html>
 <head>
   <title>Landing Page - {{ username }}</title>
-  <link rel="stylesheet" type="text/css" href="https://localhost:9080/static/css/lp.css">
-  <!-- Getfox IIFE script-->
+  <link rel="stylesheet" type="text/css" href="https://api.getfox.io/static/css/lp.css">
+  <!-- IIFE script-->
   <script src="/static/js/landingpage.js"></script>
 </head>
 <body>
@@ -10,7 +10,6 @@
     getfox_lp.init({
       "key": "{{ apikey }}",
       "username":"{{ username }}",
-      "apiUrl": "https://localhost:9080/api",
       "build": true,
     })
     getfox_lp.getUser('{{username}}', '{{apikey}}').then(data => {

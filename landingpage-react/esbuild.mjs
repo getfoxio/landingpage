@@ -14,6 +14,12 @@ esbuild.build({
 })
 
 esbuild.build({
+  entryPoints: ['src/styles/index.css'],
+  bundle: true,
+  outfile: 'dist/styles.css',
+})
+
+esbuild.build({
   entryPoints: ['src/index.ts'],
   outdir: 'dist/cjs',
   bundle: true,
@@ -23,4 +29,3 @@ esbuild.build({
   target: 'esnext',
   plugins: [nodeExternalsPlugin()],
 })
-

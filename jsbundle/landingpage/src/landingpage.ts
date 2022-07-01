@@ -3,8 +3,9 @@ export const getfox: any = {
     __params__: {
       key: '',
       username: '',
-      apiEndpoint: 'https://api.getfox.io/api',
+      apiEndpoint: 'https://api.getfox.io/graphql',
       build: false,
+      appUrl: 'https://getfox.io',
     },
 
     init: (options: any) => {
@@ -14,7 +15,6 @@ export const getfox: any = {
         if (!!options.username) {
           getfox.landingpage.__params__.username = options.username
         }
-        getfox.landingpage.__params__.apiEndpoint = 'https://api.getfox.io/api'
         if (options.apiUrl) {
           getfox.landingpage.__params__.apiEndpoint = options.apiUrl
         }
@@ -29,7 +29,6 @@ export const getfox: any = {
             if (user) {
               if (buildHtml) {
                 getfox.landingpage.build(user)
-                console.log('getfox.landingpage.build()')
               }
               resolve(user)
             }
@@ -124,6 +123,9 @@ export const getfox: any = {
             return null
           }
           if (!data.errors) {
+            if (!data.data.user.appUrl.includes('None')) {
+              getfox.landingpage.__params__.appUrl = data.data.user.appUrl
+            }
             return data.data.user
           }
         })
@@ -180,8 +182,8 @@ export const getfox: any = {
           query: query,
         }),
       }
-      return fetch(getfox.landingpage.__params__.apiEndpoint, options).then((res) =>
-        res.json()
+      return fetch(getfox.landingpage.__params__.apiEndpoint, options).then(
+        (res) => res.json()
       )
     },
 
@@ -203,7 +205,7 @@ export const getfox: any = {
       <div class="landing_page__background--overlay" style="
       ${
         user.landingPage.background
-          ? `background-image:url(${user.appUrl}/${user.landingPage.background});`
+          ? `background-image:url(${getfox.landingpage.__params__.appUrl}/${user.landingPage.background});`
           : ''
       }
       ${
@@ -238,15 +240,17 @@ export const getfox: any = {
               <div class="fc profile-logo">
                 <label
                   class="profile-logo-gfx"
-                  style="background-image: url('${user.appUrl}/${
-                user.profileImage
-              }');"
+                  style="background-image: url('${
+                    getfox.landingpage.__params__.appUrl
+                  }/${user.profileImage}');"
                 >
               </div>
             </form>
           </div>
           <div class="df flc landing_page__username">
-          <a href="${user.appUrl}/${user.username}" style="${
+          <a href="${getfox.landingpage.__params__.appUrl}/${
+                user.username
+              }" style="${
                 user.landingPage.textColor
                   ? `color:${user.landingPage.textColor};`
                   : ''
@@ -273,7 +277,7 @@ export const getfox: any = {
           }"
         >
           <img src="${
-            user.appUrl
+            getfox.landingpage.__params__.appUrl
           }/static/images/ig-icon-black.svg" alt="instagram" />
         </a>
         `
@@ -293,7 +297,7 @@ export const getfox: any = {
           }"
         >
           <img src="${
-            user.appUrl
+            getfox.landingpage.__params__.appUrl
           }/static/images/fb-icon-black.svg" alt="facebook" />
         </a>
         `
@@ -313,7 +317,7 @@ export const getfox: any = {
           }"
         >
           <img src="${
-            user.appUrl
+            getfox.landingpage.__params__.appUrl
           }/static/images/twitter-icon-black.svg" alt="twitter" />
         </a>
         `
@@ -365,7 +369,7 @@ export const getfox: any = {
                 }
                 let linkImage = ''
                 if (!!linkImageSource) {
-                  linkImage = `<div class="link-resource-thumb" style="background-image:url(${user.appUrl}/${linkImageSource});"></div>`
+                  linkImage = `<div class="link-resource-thumb" style="background-image:url(${getfox.landingpage.__params__.appUrl}/${linkImageSource});"></div>`
                 }
                 return `<li 
                 class="df flc frow landing_page__link-row ${
@@ -424,10 +428,10 @@ export const getfox: any = {
         <div class="f1 frt copyright copyright-footer">
           <div class="df frt footer-links">
             <a class="footer-link" href="${
-              user.appUrl
+              getfox.landingpage.__params__.appUrl
             }/static/support" target="_blank">${user.translations.support}</a>
             <a class="footer-link" href="${
-              user.appUrl
+              getfox.landingpage.__params__.appUrl
             }/static/privacy" target="_blank">${
         user.translations.privacyPolicy
       }</a>
