@@ -6,8 +6,8 @@ export default function App() {
   return (
     <div className="App">
       <LandingPage
-        username=''
-        apiKey=''
+        username={process.env.REACT_APP_USERNAME}
+        apiKey={process.env.REACT_APP_API_KEY}
       />
     </div>
   )

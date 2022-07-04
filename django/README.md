@@ -24,7 +24,7 @@ Where:
 
 ### Dependencies
 
-Page imports the `jsbundle/dist/iife` landingpage bundle to fetch user data from API endpoint and build the Landing Page template.
+Page imports the `jsbundle/dist/iife/landingpage-html.js` javascript bundle to fetch user data from API endpoint and build the landing page template.
 
 ```
 

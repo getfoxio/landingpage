@@ -24,8 +24,7 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
   }, [])
 
   useEffect(() => {
-    if (user && !user.appUrl.includes('None')) {
-      console.log('update', user.appUrl)
+    if (user) {
       setAppUrl(user.appUrl)
     }
   }, [user])

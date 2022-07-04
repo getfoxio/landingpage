@@ -8,10 +8,10 @@ It generates Getfox Landing Page in a page where your application is published. 
 
 ## Usage
 
-1. Install the package:
+1. Install the package from tarball:
 
 ```
-npm install @getfoxio/landingpage-react
+npm install getfoxio-landingpage-react-1.0.0.tgz
 ```
 
 2. Example code usage in your React application:
@@ -46,4 +46,10 @@ npm install
 
 ```
 npm run build
+```
+
+2. Create tarball package
+
+```
+npm pack
 ```
