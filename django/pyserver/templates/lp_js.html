@@ -7,10 +7,9 @@
 </head>
 <body>
   <script>
-    getfox_lp.init({
+    getfox_lp.build({
       "key": "{{ apikey }}",
       "username":"{{ username }}",
-      "build": true,
     })
     getfox_lp.getUser('{{username}}', '{{apikey}}').then(data => {
       console.log(data);

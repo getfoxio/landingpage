@@ -8,7 +8,7 @@ export const getfox: any = {
       appUrl: 'https://getfox.io',
     },
 
-    init: (options: any) => {
+    build: (options: any) => {
       return new Promise((resolve, reject) => {
         getfox.landingpage.__params__.key = options.key
         getfox.landingpage.__params__.username = ''
@@ -18,7 +18,7 @@ export const getfox: any = {
         if (options.apiUrl) {
           getfox.landingpage.__params__.apiEndpoint = options.apiUrl
         }
-        let buildHtml: boolean = false
+        let buildHtml: boolean = true
         if (!!options.build) {
           buildHtml = options.build
         }
@@ -28,7 +28,7 @@ export const getfox: any = {
           .then((user: any) => {
             if (user) {
               if (buildHtml) {
-                getfox.landingpage.build(user)
+                getfox.landingpage.buildHtml(user)
               }
               resolve(user)
             }
@@ -146,7 +146,7 @@ export const getfox: any = {
       )
     },
 
-    build: (user: any) => {
+    buildHtml: (user: any) => {
       const body = document.body
       const html = `
     ${

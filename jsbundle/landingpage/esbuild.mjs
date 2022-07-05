@@ -3,8 +3,8 @@ import { nodeExternalsPlugin } from 'esbuild-node-externals'
 
 esbuild
   .build({
-    entryPoints: ['src/landingpage.ts', 'src/landingpage-html.ts'],
-    outdir: 'dist/iife',
+    entryPoints: ['src/landingpage-html.ts'],
+    outfile: 'dist/iife/landingpage.js',
     bundle: true,
     sourcemap: false,
     minify: true,

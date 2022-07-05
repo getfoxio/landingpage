@@ -4,7 +4,7 @@ React component library for importing Getfox Landing pages into React applicatio
 
 ## How it works
 
-It generates Getfox Landing Page in a page where your application is published. It pulls user's data from the Getfox API endpoint and generates React template in your application scope.
+It generates Getfox Landing Page in a page where your application is published. It pulls user's data from the Getfox API endpoint. It appends landing page structure into your React application scope.
 
 ## Usage
 
@@ -32,7 +32,7 @@ Where:
 
 ## Dependencies
 
-Project imports the `jsbundle/dist/esm` bundle to fetch user data from API endpoint. It's placed in the `src/lib` folder.
+Project imports the `jsbundle/dist/esm` javascript bundle and requests for user's data from API endpoint. The bundle file is located in the `src/lib` folder.
 
 ## Build
 
