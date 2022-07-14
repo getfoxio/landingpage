@@ -21,7 +21,7 @@ import { LandingPage } from '@getfoxio/landingpage-react'
 import '@getfoxio/landingpage-react/dist/styles.css'
 
 export default function App() {
-  return <LandingPage username="{username}" apiKey="{apiKey}" />
+  return <LandingPage username="{username}" apiKey="{apikey}" />
 }
 ```
 

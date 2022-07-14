@@ -18,9 +18,11 @@ export const getfox: any = {
         if (options.apiUrl) {
           getfox.landingpage.__params__.apiEndpoint = options.apiUrl
         }
-        
+
         if (!!options.build && options.build) {
-          console.warn('HTML template builder is unavailable in this version. Use version with HTML builder.')
+          console.warn(
+            'HTML template builder is unavailable in this version. Use version with HTML builder.'
+          )
         }
 
         getfox.landingpage
@@ -109,6 +111,7 @@ export const getfox: any = {
         support
         privacyPolicy
         noLinksFound
+        copyLink
       }
     }
   }`
@@ -141,6 +144,51 @@ export const getfox: any = {
       return fetch(getfox.landingpage.__params__.apiEndpoint, options).then(
         (res) => res.json()
       )
+    },
+
+    copyLink: (e: any) => {
+      e.preventDefault()
+      e.stopPropagation()
+      const element = e.currentTarget
+      const url = element.dataset.clipboardText
+      if (!navigator.clipboard) {
+        getfox.landingpage.fallbackCopyTextToClipboard(element, url)
+        return
+      }
+      navigator.clipboard.writeText(url).then(
+        () => {
+          element.classList.add('js-copied')
+          setTimeout(() => {
+            element.classList.remove('js-copied')
+          }, 300)
+        },
+        (error) => {}
+      )
+    },
+    fallbackCopyTextToClipboard: (element: any, text: string) => {
+      const textArea = document.createElement('textarea')
+      textArea.value = text
+
+      // Avoid scrolling to bottom
+      textArea.style.top = '0'
+      textArea.style.left = '0'
+      textArea.style.position = 'fixed'
+
+      document.body.appendChild(textArea)
+      textArea.focus()
+      textArea.select()
+
+      try {
+        const successful = document.execCommand('copy')
+        if (successful) {
+          element.classList.add('js-copied')
+          setTimeout(() => {
+            element.classList.remove('js-copied')
+          }, 300)
+        }
+      } catch (err) {}
+
+      document.body.removeChild(textArea)
     },
   },
 }

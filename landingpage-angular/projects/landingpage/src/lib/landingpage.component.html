@@ -1,0 +1,268 @@
+<ng-container
+  *ngIf="isUser; then userContent; else otherContent"
+></ng-container>
+
+<ng-template #userContent class="">
+  <style *ngIf="user.landingPage.fontFamily">
+    font-family:${user.landingPage.fontFamily};
+  </style>
+  <div class="profile-landingpage">
+    <div
+      class="landing_page__background--overlay"
+      [ngStyle]="{
+        'background-image': user.landingPage.background
+          ? 'url(' + user.appUrl + '/' + user.landingPage.background + ')'
+          : 'none',
+        'background-color': user.landingPage.backgroundColor
+          ? user.landingPage.backgroundColor
+          : 'none',
+        'background-position': user.landingPage.backgroundPosition
+          ? user.landingPage.backgroundPosition
+          : 'none'
+      }"
+    >
+      <div
+        [ngClass]="{
+          fcol: true,
+          landing_page__header: true,
+          'no-background': !user.landingPage.background
+        }"
+        [ngStyle]="{
+          'background-image':
+            'linear-gradient(to bottom,' +
+            user.landingPage.blendColor +
+            ', ' +
+            user.landingPage.blendColor.slice(0, 7) +
+            '00)'
+        }"
+      >
+        <div class="frow fc profiles-names">
+          <div class="flc" *ngIf="user.profileImage">
+            <div
+              class="profile-image-overlay"
+              [ngStyle]="{ 'pointer-events': 'none' }"
+            >
+              <form class="fc upload-profile-image">
+                <div class="fc profile-logo">
+                  <label
+                    class="profile-logo-gfx"
+                    [ngStyle]="{
+                      'background-image':
+                        'url(' + user.appUrl + '/' + user.profileImage + ')'
+                    }"
+                  ></label>
+                </div>
+              </form>
+            </div>
+            <div class="df flc landing_page__username">
+              <a
+                href="{{ user.appUrl + '/' + user.username }}"
+                [ngStyle]="{
+                  color: user.landingPage.textColor
+                    ? user.landingPage.textColor
+                    : 'none'
+                }"
+              >
+                {{
+                  user.landingPage.title
+                    ? user.landingPage.title
+                    : user.username
+                }}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="df fl frow profiles-names-row landingpage__profiles-names-row"
+        >
+          <a
+            *ngIf="
+              user.socialMedia.instagramId && user.socialMedia.instagramUsername
+            "
+            href="{{
+              'https://instagram.com/' + user.socialMedia.instagramUsername
+            }}"
+            target="_blank"
+            rel="noreferrer"
+            class="fc profile-link--href profile-link--href-icon profile-link--href-ig"
+            [ngStyle]="{
+              color: user.landingPage.textColor
+                ? user.landingPage.textColor
+                : 'none'
+            }"
+          >
+            <img
+              src="{{ user.appUrl + '/static/images/ig-icon-black.svg' }}"
+              alt="instagram"
+            />
+          </a>
+          <a
+            *ngIf="user.socialMedia.facebookId && user.socialMedia.facebookUrl"
+            href="{{ user.socialMedia.facebookUrl }}"
+            target="_blank"
+            rel="noreferrer"
+            class="fc profile-link--href profile-link--href-icon profile-link--href-ig"
+            [ngStyle]="{
+              color: user.landingPage.textColor
+                ? user.landingPage.textColor
+                : 'none'
+            }"
+          >
+            <img
+              src="{{ user.appUrl + '/static/images/fb-icon-black.svg' }}"
+              alt="facebook"
+            />
+          </a>
+          <a
+            *ngIf="user.socialMedia.twitterId && user.socialMedia.twitterUrl"
+            href="{{ user.socialMedia.twitterUrl }}"
+            target="_blank"
+            rel="noreferrer"
+            class="fc profile-link--href profile-link--href-icon profile-link--href-ig"
+            [ngStyle]="{
+              color: user.landingPage.textColor
+                ? user.landingPage.textColor
+                : 'none'
+            }"
+          >
+            <img
+              src="{{ user.appUrl + '/static/images/twitter-icon-black.svg' }}"
+              alt="twitter"
+            />
+          </a>
+        </div>
+        <div
+          class="frow fc landing_page__introtext--wrap"
+          *ngIf="user.landingPage.description"
+        >
+          <div
+            class="f1 landing_page__introtext"
+            [ngStyle]="{
+              color: user.landingPage.textDescriptionColor
+                ? user.landingPage.textDescriptionColor
+                : 'none'
+            }"
+          >
+            {{ user.landingPage.description }}
+          </div>
+        </div>
+      </div>
+      <div class="fcol landing_page__content page-content--dashboard">
+        <ul class="landing_page__links-list sortable-list">
+          <div class="fc" *ngIf="!user.links.length">
+            {{ user.translations.noLinksFound }}
+          </div>
+          <li
+            *ngFor="let link of user.links"
+            [ngClass]="{
+              df: true,
+              flc: true,
+              frow: true,
+              'landing_page__link-row': true,
+              'landing_page__link-row--clickable': link.isClickable,
+              'link-resource': true,
+              'sortable-list__item with-thumb': true
+            }"
+            (click)="linkClick(link.isClickable, link.path, link.linkType)"
+          >
+            <div
+              *ngIf="!!getLinkImageSource(link)"
+              class="link-resource-thumb"
+              [ngStyle]="{
+                'background-image':
+                  'url(' + user.appUrl + '/' + getLinkImageSource(link) + ')'
+              }"
+            ></div>
+            <div class="f1 fcol">
+              <div class="f1 fc links-list__link-text">{{ link.name }}</div>
+              <div class="f1 fc" *ngIf="!!link.product">
+                <div class="flc landingpage__shoplinkproduct-attributes">
+                  <span class="product-label">
+                    {{
+                      link.product.priceLabel === 'onlynow'
+                        ? user.translations.onlyNow
+                        : link.product.priceLabel == 'sale'
+                        ? user.translations.sale
+                        : link.product.priceLabel === 'special'
+                        ? user.translations.special
+                        : ''
+                    }}
+                  </span>
+                  <span class="links-list__link-text product-price">
+                    {{ link.product.price }} {{ link.product.currency }}
+                  </span>
+                  <span class="links-list__link-text product-buy-now">
+                    {{ user.translations.buyNow }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="flc landingpage__copy-link"
+              [attr.aria-label]="user.translations.copyLink"
+              data-microtip-position="bottom"
+              role="tooltip"
+              [attr.data-clipboard-text]="
+                user.appUrl + '/' + user.username + '/' + link.linkUrl
+              "
+              (click)="copyLink($event)"
+            >
+              <svg
+                x="0px"
+                y="0px"
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#ddd"
+                  d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+                ></path>
+              </svg>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="f1 frt copyright copyright-footer">
+        <div class="df frt footer-links">
+          <a
+            class="footer-link"
+            href="{{ user.appUrl + '/static/support' }}"
+            target="_blank"
+          >
+            {{ user.translations.support }}
+          </a>
+          <a
+            class="footer-link"
+            href="{{ user.appUrl + '/static/privacy' }}"
+            target="_blank"
+          >
+            {{ user.translations.privacyPolicy }}
+          </a>
+        </div>
+        <div class="frt footer-links">
+          <div class="fcol">
+            <p class="df">
+              &copy;{{ ' ' }}
+              <a href="https://getfox.io" class="footer-link-getfox" target="">
+                Getfox
+              </a>
+              {{ user.translations.rights }}.<br />
+            </p>
+            <p class="frt">
+              {{ user.translations.madeWith }}❤️{{ user.translations.forAll
+              }}{{ ' ' }}
+              <a
+                className="footer-link-fox"
+                href="https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/red-fox.aspx"
+                target="_blank"
+                >{{ ' ' }}{{ user.translations.foxes }}</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #otherContent><div>loading...</div></ng-template>

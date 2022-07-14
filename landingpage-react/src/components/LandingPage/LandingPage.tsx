@@ -157,6 +157,20 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                     </a>
                   ) : null}
                 </div>
+                {user.landingPage.description ? (
+                  <div className="frow fc landing_page__introtext--wrap">
+                    <div
+                      className="f1 landing_page__introtext"
+                      style={{
+                        color: user.landingPage.textDescriptionColor
+                          ? user.landingPage.textDescriptionColor
+                          : null,
+                      }}
+                    >
+                      {user.landingPage.description}
+                    </div>
+                  </div>
+                ) : null}
               </div>
               <div className="fcol landing_page__content page-content--dashboard">
                 <ul className="landing_page__links-list sortable-list">
@@ -215,11 +229,13 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                         >
                           {linkImage}
                           <div className="f1 fcol">
-                            <div className="f1 fc">{link.name}</div>
+                            <div className="f1 fc links-list__link-text">
+                              {link.name}
+                            </div>
                             {link.product ? (
                               <div className="f1 fc">
                                 <div className="flc landingpage__shoplinkproduct-attributes">
-                                  <span className="product-label">
+                                  <span className="links-list__link-text product-label">
                                     {link.product.priceLabel === 'onlynow'
                                       ? user.translations.onlyNow
                                       : ''}
@@ -230,15 +246,38 @@ const LandingPage = ({ username, apiKey, apiEndpoint }: LandingPageProps) => {
                                       ? user.translations.special
                                       : ''}
                                   </span>
-                                  <span className="product-price">
+                                  <span className="links-list__link-text product-price">
                                     {link.product.price} {link.product.currency}
                                   </span>
-                                  <span className="product-buy-now">
+                                  <span className="links-list__link-text product-buy-now">
                                     {user.translations.buyNow}
                                   </span>
                                 </div>
                               </div>
                             ) : null}
+                          </div>
+                          <div
+                            className="flc landingpage__copy-link"
+                            aria-label={user.translations.buyNow}
+                            data-microtip-position="bottom"
+                            role="tooltip"
+                            data-clipboard-text={`${appUrl}/${user.username}/${link.linkUrl}`}
+                            onClick={(event) => {
+                              getfox.landingpage.copyLink(event)
+                            }}
+                          >
+                            <svg
+                              x="0px"
+                              y="0px"
+                              width="24px"
+                              height="24px"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                fill="#ddd"
+                                d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+                              ></path>
+                            </svg>
                           </div>
                         </li>
                       )

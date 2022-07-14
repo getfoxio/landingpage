@@ -112,6 +112,7 @@ export const getfox: any = {
         support
         privacyPolicy
         noLinksFound
+        copyLink
       }
     }
   }`
@@ -144,6 +145,52 @@ export const getfox: any = {
       return fetch(getfox.landingpage.__params__.apiEndpoint, options).then(
         (res) => res.json()
       )
+    },
+
+    copyLink: (e: any) => {
+      e.preventDefault()
+      e.stopPropagation()
+      const element = e.currentTarget
+      const url = element.dataset.clipboardText
+      if (!navigator.clipboard) {
+        getfox.landingpage.fallbackCopyTextToClipboard(element, url)
+        return
+      }
+      navigator.clipboard.writeText(url).then(
+        () => {
+          element.classList.add('js-copied')
+          setTimeout(() => {
+            element.classList.remove('js-copied')
+          }, 300)
+        },
+        (error) => {}
+      )
+    },
+
+    fallbackCopyTextToClipboard: (element: any, text: string) => {
+      const textArea = document.createElement('textarea')
+      textArea.value = text
+
+      // Avoid scrolling to bottom
+      textArea.style.top = '0'
+      textArea.style.left = '0'
+      textArea.style.position = 'fixed'
+
+      document.body.appendChild(textArea)
+      textArea.focus()
+      textArea.select()
+
+      try {
+        const successful = document.execCommand('copy')
+        if (successful) {
+          element.classList.add('js-copied')
+          setTimeout(() => {
+            element.classList.remove('js-copied')
+          }, 300)
+        }
+      } catch (err) {}
+
+      document.body.removeChild(textArea)
     },
 
     buildHtml: (user: any) => {
@@ -218,6 +265,22 @@ export const getfox: any = {
               </a>
           </div>
         `
+            : ''
+        }
+        ${
+          user.landingPage.description
+            ? `
+            <div class="frow fc landing_page__introtext--wrap">
+              <div class="f1 landing_page__introtext"
+              style="${
+                user.landingPage.textDescriptionColor
+                  ? `color:${user.landingPage.textDescriptionColor};`
+                  : ''
+              }">
+              ${user.landingPage.description}
+              </div>
+            </div>
+            `
             : ''
         }
         </div>
@@ -342,13 +405,13 @@ export const getfox: any = {
                 >
                 ${linkImage}
                 <a class="f1 fcol">
-                  <div class="f1 fc">${link.name}</div>
+                  <div class="f1 fc links-list__link-text">${link.name}</div>
                   ${
                     link.product
                       ? `
                   <div class="f1 fc">   
                     <div class="flc landingpage__shoplinkproduct-attributes">
-                      <span class="product-label">
+                      <span class="links-list__link-text product-label">
                         ${
                           link.product.priceLabel === 'onlynow'
                             ? user.translations.onlyNow
@@ -365,10 +428,10 @@ export const getfox: any = {
                             : ''
                         }
                       </span>
-                      <span class="product-price">${link.product.price} ${
-                          link.product.currency
-                        }</span> 
-                      <span class="product-buy-now">${
+                      <span class="links-list__link-text product-price">${
+                        link.product.price
+                      } ${link.product.currency}</span> 
+                      <span class="links-list__link-text product-buy-now">${
                         user.translations.buyNow
                       }</span>
                     </div>
@@ -377,6 +440,19 @@ export const getfox: any = {
                       : ''
                   }
                 </a>
+                <div class="flc landingpage__copy-link" aria-label="${
+                  user.translations.copyLink
+                }" data-microtip-position="bottom" role="tooltip"
+                data-clipboard-text="
+                ${getfox.landingpage.__params__.appUrl}/${user.username}/${
+                  link.linkUrl
+                }"
+                onClick="javascript:getfox_lp.copyLink()"
+                >
+                  <svg x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24">
+                    <path fill="#ddd" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path>
+                  </svg>
+                </div>
           </li>`
               })
               .join('')}

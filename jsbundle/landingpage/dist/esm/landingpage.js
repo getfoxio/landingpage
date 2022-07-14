@@ -1,5 +1,5 @@
-"use strict";var n={landingpage:{__params__:{key:"",username:"",apiEndpoint:"https://api.getfox.io/graphql",build:!1,appUrl:"https://getfox.io"},init:e=>new Promise((r,i)=>{n.landingpage.__params__.key=e.key,n.landingpage.__params__.username="",e.username&&(n.landingpage.__params__.username=e.username),e.apiUrl&&(n.landingpage.__params__.apiEndpoint=e.apiUrl),!!e.build&&e.build&&console.warn("HTML template builder is unavailable in this version. Use version with HTML builder."),n.landingpage.getUser().then(a=>{a&&r(a)}).catch(a=>{i(a)})}),openLink:(e,r)=>{window.open(e,r!==3?"_blank":"_self")},getUser:(e=n.landingpage.__params__.username,r=n.landingpage.__params__.key)=>{let i=`{
-    user(username: "${e}",apikey:"${r}") {
+"use strict";var r={landingpage:{__params__:{key:"",username:"",apiEndpoint:"https://api.getfox.io/graphql",build:!1,appUrl:"https://getfox.io"},init:e=>new Promise((n,a)=>{r.landingpage.__params__.key=e.key,r.landingpage.__params__.username="",e.username&&(r.landingpage.__params__.username=e.username),e.apiUrl&&(r.landingpage.__params__.apiEndpoint=e.apiUrl),!!e.build&&e.build&&console.warn("HTML template builder is unavailable in this version. Use version with HTML builder."),r.landingpage.getUser().then(t=>{t&&n(t)}).catch(t=>{a(t)})}),openLink:(e,n)=>{window.open(e,n!==3?"_blank":"_self")},getUser:(e=r.landingpage.__params__.username,n=r.landingpage.__params__.key)=>{let a=`{
+    user(username: "${e}",apikey:"${n}") {
       id
       username
       email
@@ -63,6 +63,7 @@
         support
         privacyPolicy
         noLinksFound
+        copyLink
       }
     }
-  }`;return n.landingpage.fetchApi(i).then(a=>{if(a.errors)return console.log("GetfoxAPI: ",a.errors[0].message),null;if(!a.errors)return a.data.user}).catch(a=>{console.log("GetfoxAPI: Unable to connect to API service.",a)})},fetchApi:e=>{let r={method:"post",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:e})};return fetch(n.landingpage.__params__.apiEndpoint,r).then(i=>i.json())}}};window.getfox=n;window.getfox_lp=n.landingpage;export{n as getfox};
+  }`;return r.landingpage.fetchApi(a).then(t=>{if(t.errors)return console.log("GetfoxAPI: ",t.errors[0].message),null;if(!t.errors)return t.data.user}).catch(t=>{console.log("GetfoxAPI: Unable to connect to API service.",t)})},fetchApi:e=>{let n={method:"post",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:e})};return fetch(r.landingpage.__params__.apiEndpoint,n).then(a=>a.json())},copyLink:e=>{e.preventDefault(),e.stopPropagation();let n=e.currentTarget,a=n.dataset.clipboardText;if(!navigator.clipboard){r.landingpage.fallbackCopyTextToClipboard(n,a);return}navigator.clipboard.writeText(a).then(()=>{n.classList.add("js-copied"),setTimeout(()=>{n.classList.remove("js-copied")},300)},t=>{})},fallbackCopyTextToClipboard:(e,n)=>{let a=document.createElement("textarea");a.value=n,a.style.top="0",a.style.left="0",a.style.position="fixed",document.body.appendChild(a),a.focus(),a.select();try{document.execCommand("copy")&&(e.classList.add("js-copied"),setTimeout(()=>{e.classList.remove("js-copied")},300))}catch{}document.body.removeChild(a)}}};window.getfox=r;window.getfox_lp=r.landingpage;export{r as getfox};

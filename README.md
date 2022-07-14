@@ -93,6 +93,7 @@ query {
         support
         privacyPolicy
         noLinksFound
+        copyLink
       }
     }
   }

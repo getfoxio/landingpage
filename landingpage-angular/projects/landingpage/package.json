@@ -1,0 +1,29 @@
+{
+  "name": "@getfoxio/landingpage-angular",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/getfoxio"
+  },
+  "version": "1.0.0",
+  "description": "Getfox Landing Page Angular component library",
+  "author": "getfox.io",
+  "license": "ISC",
+  "peerDependencies": {
+    "@angular/common": "^14.0.0",
+    "@angular/core": "^14.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/getfoxio/landingpage.git"
+  },
+  "keywords": [
+    "getfox",
+    "landingpage"
+  ],
+  "bugs": {
+    "url": "https://github.com/getfoxio/landingpage/issues"
+  },
+  "homepage": "https://github.com/getfoxio/landingpage#readme"
+}
