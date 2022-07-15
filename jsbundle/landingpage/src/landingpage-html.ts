@@ -1,4 +1,4 @@
-export const getfox: any = {
+const getfox: any = {
   landingpage: {
     __params__: {
       key: '',
@@ -493,3 +493,4 @@ export const getfox: any = {
 }
 window.getfox = getfox
 window.getfox_lp = getfox.landingpage
+export default getfox
