@@ -1,0 +1,33 @@
+{
+  "name": "@getfoxio/landingpage-vue",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.4",
+    "rollup": "^2.77.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-scss": "^3.0.0",
+    "rollup-plugin-styles": "^4.0.0",
+    "rollup-plugin-vue": "^6.0.0",
+    "sass": "^1.54.0",
+    "vuepress": "^2.0.0-beta.27"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "version": "1.0.0",
+  "main": "dist/landingpage.js",
+  "module": "dist/landingpage.mjs",
+  "files": [
+    "dist/*"
+  ]
+}

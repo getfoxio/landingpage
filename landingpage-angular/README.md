@@ -7,7 +7,7 @@ Project contains:
 
 ## How it works
 
-It generates Getfox Landing Page in a page where your application is published. It pulls user's data from the Getfox API endpoint. It appends landing page structure into your React application scope.
+It generates Getfox Landing Page in a page where your application is published. It pulls user's data from the Getfox API endpoint. It appends landing page structure into your Vue application scope.
 
 ## Dependencies
 

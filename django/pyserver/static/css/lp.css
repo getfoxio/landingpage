@@ -56,6 +56,7 @@ button {
 
 ul {
   padding: 0;
+  margin: 0;
   list-style: none;
 }
 
@@ -3453,6 +3454,7 @@ li.user__stats.followed {
 
 .landing_page__username a {
   color: white;
+  font-weight: 800;
 }
 
 .landing_page__header .landing_page__username a {
@@ -3527,7 +3529,6 @@ li.user__stats.followed {
   text-align: center;
   font-style: italic;
   font-size: 34px;
-  font-weight: 800;
   margin: 0 auto;
   margin-left: 10px;
 }

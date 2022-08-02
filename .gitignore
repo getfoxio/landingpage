@@ -1,4 +1,5 @@
 .local.env
+.env.development.local
 *.log
 __pycache__
 package-lock.json
